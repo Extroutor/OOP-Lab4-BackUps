@@ -4,7 +4,6 @@ namespace lab4
 {
     public class FileInfo
     {
-        
         private string _name;
         private int _size;
         
@@ -29,7 +28,5 @@ namespace lab4
         {
             return _size;
         }
-        
-        
     }
 }

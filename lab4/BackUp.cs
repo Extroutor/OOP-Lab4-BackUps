@@ -26,14 +26,14 @@ namespace lab4
                 }
                 case "Archive":
                 {
-                    int size = 0;
-                    for (int i = 0; i < listOfFiles.Count; i++)
+                    var size = 0;
+                    for (var i = 0; i < listOfFiles.Count; i++)
                     {
                         size += listOfFiles[i].GetSize();
                     }
 
                     size = (int) (size * 0.95);
-                    _list.Add(new RestorePoint("backup_" + DateTime.Now + ".rar", size));
+                    _list.Add(new RestorePoint("backup " + DateTime.Now + ".rar", size));
                     break;
                 }
                 default:
