@@ -12,15 +12,15 @@ namespace lab4
             {
                 case "Separately":
                 {
-                    var list = new List<FileCopy>();
+                    var listOfCopy = new List<FileCopy>();
                     for (var i = 0; i < listOfFiles.Count; i++)
                     {
-                        list[i] = new FileCopy(listOfFiles[i].GetName(), listOfFiles[i].GetSize());
+                        listOfCopy[i] = new FileCopy(listOfFiles[i].GetName(), listOfFiles[i].GetSize());
                     }
 
-                    for (int i = 0; i < list.Count; i++)
+                    for (var i = 0; i < listOfCopy.Count; i++)
                     {
-                        _list.Add(new RestorePoint(list[i].GetName(), list[i].GetSize()));
+                        _list.Add(new RestorePoint(listOfCopy[i].GetName(), listOfCopy[i].GetSize()));
                     }
                     break;
                 }

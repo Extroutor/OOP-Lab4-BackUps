@@ -15,6 +15,5 @@ namespace lab4
             _size = size;
             _date = DateTime.Now;
         }
-
     }
 }

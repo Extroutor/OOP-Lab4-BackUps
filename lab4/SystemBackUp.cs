@@ -17,9 +17,7 @@ namespace lab4
 
         public void CreatRestorePoint(List<FileInfo> listOfFiles)
         {
-            
             _backUp[_idBackup].RestorePoint(listOfFiles, _storageType);
-            
         }
 
     }

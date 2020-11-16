@@ -10,11 +10,9 @@ namespace lab4
         
         public FileCopy(string name, int size)
         {
-            
             _name = name + "_" + _dateTime;
             _size = size;
             _dateTime = DateTime.Now;
-
         }
         
         public string GetName()
