@@ -13,9 +13,9 @@ namespace lab4
             
             var listOfFiles = new List<FileInfo> {file1, file2};
             
-            var idOfBackUp1 = systemBackUp.AddBackUp("Separately");
+            var id1 = systemBackUp.AddBackUp("Separately");
             
-            systemBackUp.CreatRestorePoint(idOfBackUp1, listOfFiles);
+            systemBackUp.CreatRestorePoint(id1, "Full", listOfFiles);
         }
     }
 }

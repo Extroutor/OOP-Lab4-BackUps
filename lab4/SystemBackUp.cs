@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace lab4
 {
@@ -11,15 +12,23 @@ namespace lab4
 
         public int AddBackUp(string typeOfStorage)
         {
+            _idBackup++;
             _storageType = typeOfStorage;
             _backUp[_idBackup] = new BackUp();
-            _idBackup++;
             return _idBackup;
         }
         
-        public void CreatRestorePoint(int id, List<FileInfo> listOfFiles)
+        public void CreatRestorePoint(int id, string typeOfPoint, List<FileInfo> listOfFiles)
         {
-            _backUp[id].RestorePoint(listOfFiles, _storageType);
+            try
+            {
+                _backUp[id].RestorePoint(listOfFiles, _storageType, typeOfPoint);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
