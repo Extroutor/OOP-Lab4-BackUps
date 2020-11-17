@@ -23,7 +23,7 @@ namespace lab4
                                 listOfCopy.Add(new FileCopy(listOfFiles[i].GetName(), listOfFiles[i].GetSize()));
                             }
 
-                            _list.Add(new RestorePoint(listOfCopy));
+                            _list.Add(new RestorePoint(listOfCopy, storageType, typeOfPoint));
 
                             break;
 
@@ -36,7 +36,7 @@ namespace lab4
                             }
 
                             var difSize = _list[_list.Count - 1].GetSize() - size;
-                            _list.Add(new RestorePoint(difSize));
+                            _list.Add(new RestorePoint(difSize, storageType, typeOfPoint));
 
                             break;
 
@@ -73,7 +73,7 @@ namespace lab4
 
                             size = (int) (size * 0.95);
                             var difSize = _list[_list.Count - 1].GetSize() - size;
-                            _list.Add(new RestorePoint(difSize));
+                            _list.Add(new RestorePoint(difSize, storageType,typeOfPoint));
                             break;
                         }
 
@@ -85,6 +85,67 @@ namespace lab4
                 default:
                     throw new Exception("Error: wrong type of Storage");
             }
+        }
+
+        public void DeletePointByCount(int n)
+        {
+            for (var i = 0; i < _list.Count - n; i++)
+            {
+                _list.RemoveAt(i);
+            }
+        }
+
+        public void DeletePointBySize(int size)
+        {
+            while (GetFullSize() > size)
+            {
+                _list.RemoveAt(0);
+            }
+        }
+
+        public void DeletePointByDate(DateTime date)
+        {
+            var count = _list.Count;
+            while (count > 0)
+            {
+
+                if (_list[count - 1].GetDate() < date)
+                {
+                    _list.RemoveAt(count - 1);
+                    count--;
+                }
+
+                count--;
+
+            }
+        }
+
+        public void DeletePointByHybrid()
+        {
+            
+        }
+
+
+
+        private int GetFullSize()
+        {
+            var fullSize = 0;
+            for (var i = 0; i < _list.Count; i++)
+            {
+                fullSize = _list[i].GetSize();
+            }
+
+            return fullSize;
+        }
+        
+        public void GetList()
+        {
+            for (var i = 0; i < _list.Count; i++)
+            {
+                _list[i].GetLine();
+                Console.WriteLine("");
+            }
+            
         }
     }
 }

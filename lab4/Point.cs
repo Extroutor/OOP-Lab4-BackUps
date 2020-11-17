@@ -19,6 +19,11 @@ namespace lab4
         {
             return _size;
         }
+
+        public string GetName()
+        {
+            return _name;
+        }
         
     }
 }

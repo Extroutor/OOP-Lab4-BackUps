@@ -30,5 +30,34 @@ namespace lab4
                 throw;
             }
         }
+
+        public void DeleteByCount(int id, int n)
+        {
+            _backUp[id].DeletePointByCount(n);
+            
+        }
+        
+        public void DeleteBySize(int id, int size)
+        {
+            _backUp[id].DeletePointByCount(size);
+            
+        }
+        
+        public void DeleteByDate(int id, DateTime date)
+        {
+            _backUp[id].DeletePointByDate(date);
+            
+        }
+        
+        public void DeleteByHybrid(int id, DateTime date)
+        {
+            _backUp[id].DeletePointByDate(date);
+            
+        }
+
+        public void GetList(int id)
+        {
+            _backUp[id].GetList();
+        }
     }
 }

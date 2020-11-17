@@ -7,11 +7,11 @@ namespace lab4
         private string _name;
         private int _size;
         
-        public FileInfo(string name)
+        public FileInfo(string name, int size)
         {
             _name = name;
             var rand = new Random();
-            _size = rand.Next(0, 500);
+            _size = size;
         }
 
         public void ChangeSize(int size)
