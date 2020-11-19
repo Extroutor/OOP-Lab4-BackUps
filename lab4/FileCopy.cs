@@ -24,6 +24,5 @@ namespace lab4
         {
             return _size;
         }
-
     }
 }

@@ -17,16 +17,19 @@ namespace lab4
             
             var id1 = systemBackUp.AddBackUp("Separately");
             
-            systemBackUp.CreatRestorePoint(id1, "Full", listOfFiles);
             
+            systemBackUp.CreatRestorePoint(id1, "Full", listOfFiles);
+
             Console.WriteLine("");
+            Console.WriteLine("Case №1");
             Console.WriteLine("~Listing of backup №1:");
             systemBackUp.GetList(id1);
             
-            Thread.Sleep(10000);
+            Console.WriteLine("wait 5 seconds...");
+            Thread.Sleep(5000);
             
             systemBackUp.CreatRestorePoint(id1, "Full", listOfFiles);
-            
+
             Console.WriteLine("");
             Console.WriteLine("~Listing after adding:");
             systemBackUp.GetList(id1);
@@ -36,10 +39,33 @@ namespace lab4
             Console.WriteLine("");
             Console.WriteLine("~Listing after removing:");
             systemBackUp.GetList(id1);
-
+            
             
             // Case №2
-
+            
+            var file3 = new FileInfo("file3", 100);
+            var file4 = new FileInfo("file4", 100);
+            
+            var listOfFiles2 = new List<FileInfo> {file3, file4};
+            
+            var id2 = systemBackUp.AddBackUp("Separately");
+            systemBackUp.CreatRestorePoint(id2, "Full", listOfFiles2);
+            
+            Console.WriteLine("");
+            Console.WriteLine("Case №2");
+            Console.WriteLine("~Listing of backup №2:");
+            systemBackUp.GetList(id2);
+            
+            systemBackUp.CreatRestorePoint(id2, "Full", listOfFiles2);
+            Console.WriteLine("listing after adding a point:");
+            systemBackUp.GetList(id2);
+            
+            
+            systemBackUp.DeleteBySize(id2, 250);
+            
+            Console.WriteLine("listing after removing:");
+            systemBackUp.GetList(id2);
+            
             
             //
             // listOfFiles.Remove(file1);
@@ -69,7 +95,7 @@ namespace lab4
             // Console.WriteLine("");
             // Console.WriteLine("~Listing of backup №2:");
             // systemBackUp.GetList(id2);
-            
+
         }
     }
 }

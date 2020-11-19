@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Channels;
 
 namespace lab4
 {
@@ -8,9 +9,10 @@ namespace lab4
         List<Point> _listOfFile = new List<Point>();
         private string _name;
         private DateTime _date;
-        private int _size;
-        private string _typeOfPoint;
+        private int _size = 0;
+        public string _typeOfPoint;
         private string _typeOfStorage;
+        public bool _fatherForIncremental;
 
         public RestorePoint(string name, int size)
         {
@@ -27,6 +29,11 @@ namespace lab4
             }
 
             _date = DateTime.Now;
+            for (var i = 0; i < list.Count; i++)
+            {
+                _size += _listOfFile[i].GetSize();
+            }
+            
             _typeOfPoint = typeOfPoint;
             _typeOfStorage = typeOfStorage;
         }

@@ -39,7 +39,7 @@ namespace lab4
         
         public void DeleteBySize(int id, int size)
         {
-            _backUp[id].DeletePointByCount(size);
+            _backUp[id].DeletePointBySize(size);
             
         }
         
