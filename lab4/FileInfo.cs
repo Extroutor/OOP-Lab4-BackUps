@@ -10,7 +10,6 @@ namespace lab4
         public FileInfo(string name, int size)
         {
             _name = name;
-            var rand = new Random();
             _size = size;
         }
 

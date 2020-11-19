@@ -10,15 +10,17 @@ namespace lab4
         private string _name;
         private DateTime _date;
         private int _size = 0;
+        private int _difsize = 0;
         public string _typeOfPoint;
         private string _typeOfStorage;
-        public bool _fatherForIncremental;
-
-        public RestorePoint(string name, int size)
+        
+        public RestorePoint(string name, int size, string storageType, string typeOfPoint)
         {
             _name = name;
             _size = size;
             _date = DateTime.Now;
+            _typeOfStorage = storageType;
+            _typeOfPoint = typeOfPoint;
         }
 
         public RestorePoint(List<FileCopy> list, string typeOfStorage, string typeOfPoint)
@@ -38,9 +40,10 @@ namespace lab4
             _typeOfStorage = typeOfStorage;
         }
 
-        public RestorePoint(int difSize, string typeOfStorage, string typeOfPoint)
+        public RestorePoint(int difSize, int size, string typeOfStorage, string typeOfPoint)
         {
-            _size = difSize;
+            _size = size;
+            _difsize = difSize;
             _date = DateTime.Now;
             _typeOfPoint = typeOfPoint;
             _typeOfStorage = typeOfStorage;
@@ -82,25 +85,27 @@ namespace lab4
                 {
                     for (var i = 0; i < _listOfFile.Count; i++)
                     {
-                        Console.WriteLine((i + 1) + ") " + "\"" + 
+                        Console.WriteLine((i + 1) + ") " + "name = \"" + 
                                           _listOfFile[i].GetName() + "\"" + ", size = " +
                                           _listOfFile[i].GetSize());
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Difference between current and previous points - " + _size);
+                    Console.WriteLine("Size - " + _size);
+                    Console.WriteLine("Difference between current and previous points — " + _difsize);
                 }
             }
             else
             {
                 if (_typeOfPoint == "Full")
                 {
-                    Console.WriteLine("\"" + _name + ", size = " + _size);
+                    Console.WriteLine("name = \"" + _name + "\", size = " + _size);
                 }
                 else
                 {
-                    Console.WriteLine("Difference between current and previous points - " + _size);
+                    Console.WriteLine("Size - " + _size);
+                    Console.WriteLine("Difference between current and previous points — " + _difsize);
                 }
             }
         }

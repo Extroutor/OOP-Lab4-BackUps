@@ -36,11 +36,11 @@ namespace lab4
                                 size += listOfFiles[i].GetSize();
                             }
 
-                            if (_list == null)
+                            if (_list.Count == 0)
                                 throw new Exception("Error: it is the incremental point without a father point");
 
                             var difSize = _list[_list.Count - 1].GetSize() - size;
-                            _list.Add(new RestorePoint(difSize, storageType, typeOfPoint));
+                            _list.Add(new RestorePoint(difSize, size, storageType, typeOfPoint));
 
                             break;
 
@@ -63,7 +63,7 @@ namespace lab4
                             }
 
                             size = (int) (size * 0.95);
-                            _list.Add(new RestorePoint("backup " + DateTime.Now + ".rar", size));
+                            _list.Add(new RestorePoint("backup " + DateTime.Now + ".rar", size, storageType, typeOfPoint));
                             break;
                         }
 
@@ -74,10 +74,13 @@ namespace lab4
                             {
                                 size += listOfFiles[i].GetSize();
                             }
+                            
+                            if (_list.Count == 0)
+                                throw new Exception("Error: it is the incremental point without a father point");
 
                             size = (int) (size * 0.95);
                             var difSize = _list[_list.Count - 1].GetSize() - size;
-                            _list.Add(new RestorePoint(difSize, storageType, typeOfPoint));
+                            _list.Add(new RestorePoint(difSize, size, storageType, typeOfPoint));
                             break;
                         }
 
@@ -146,9 +149,52 @@ namespace lab4
             }
         }
 
-        public void DeletePointByHybrid()
+        public void DeletePointByHybrid(Dictionary<string, object> dict, string limit)
         {
-            
+            for (var i = 0; i < _list.Count; i++)
+            {
+                var flag = 0;
+                foreach (var tmp in dict)
+                {
+                    if (tmp.Key == "byCount")
+                    {
+                        if (_list[i]._typeOfPoint == "Full" && 
+                            (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
+                            continue;
+                        else if (_list.Count > (int) tmp.Value)
+                            flag++;
+                    } else if (tmp.Key == "bySize")
+                    {
+                        if (_list[i]._typeOfPoint == "Full" && 
+                            (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
+                            continue;
+                        else if (GetFullSize() > (int) tmp.Value)
+                            flag++;
+                        } else if (tmp.Key == "byDate")
+                    {
+                        if (_list[i]._typeOfPoint == "Full" && 
+                            (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
+                            continue;
+                        else if (_list[i].GetDate() < (DateTime) tmp.Value)
+                            flag++;
+                    }
+                    else
+                        throw new Exception("Error: wrong type of removing");
+                }
+
+                if (limit == "min")
+                {
+                    if (flag >= 1)
+                        _list.RemoveAt(i);
+
+                } else if (limit == "max")
+                {
+                    if (flag == dict.Count)
+                        _list.RemoveAt(i);
+                }
+                else
+                    throw new Exception("Error: wrong type of limit");
+            }
         }
 
 
@@ -168,6 +214,7 @@ namespace lab4
             Console.WriteLine("Size of BackUp - " + GetFullSize());
             for (var i = 0; i < _list.Count; i++)
             {
+                Console.WriteLine("Point №" + (i + 1));
                 _list[i].GetLine();
                 Console.WriteLine("");
             }

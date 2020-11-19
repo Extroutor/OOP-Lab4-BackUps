@@ -49,9 +49,9 @@ namespace lab4
             
         }
         
-        public void DeleteByHybrid(int id, DateTime date)
+        public void DeleteByHybrid(int id, Dictionary<string, object> dict, string limit)
         {
-            _backUp[id].DeletePointByDate(date);
+            _backUp[id].DeletePointByHybrid(dict, limit);
             
         }
 
