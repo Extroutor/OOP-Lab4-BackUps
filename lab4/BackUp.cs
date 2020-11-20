@@ -213,52 +213,53 @@ namespace lab4
         {
             var list = new List<RestorePoint>();
             var nMax = int.MaxValue;
-            var nMin = -1;
+            var nMin = 0;
 
             foreach (var tmp in dict)
             {
                 if (tmp.Key == "byCount")
                 {
                     list.AddRange(DeletePointByCount((int) tmp.Value).ToArray());
-                    if (_list.Count - list.Count < nMax)
-                        nMax = list.Count;
-                    else
-                        nMin = list.Count;
+                    if (_list.Count - list.Count <= nMax)
+                        nMax = _list.Count - list.Count;
+                    if (_list.Count - list.Count >= nMin)
+                        nMin = _list.Count - list.Count;
                 }
                 else if (tmp.Key == "bySize")
                 {
                     list.AddRange(DeletePointBySize((int) tmp.Value).ToArray());
-                    if (_list.Count - list.Count < nMax)
-                        nMax = list.Count;
-                    else
-                        nMin = list.Count;
+                    if (_list.Count - list.Count <= nMax)
+                        nMax = _list.Count - list.Count;
+                    if (_list.Count - list.Count >= nMin)
+                        nMin = _list.Count - list.Count;
                 }
                 else if (tmp.Key == "byDate")
                 {
                     list.AddRange(DeletePointByDate((DateTime) tmp.Value).ToArray());
-                    if (_list.Count - list.Count < nMax)
-                        nMax = list.Count;
-                    else
-                        nMin = list.Count;
+                    if (_list.Count - list.Count <= nMax)
+                        nMax = _list.Count - list.Count;
+                    if (_list.Count - list.Count >= nMin)
+                        nMin = _list.Count - list.Count;
                 }
                 else
                     throw new Exception("Error: wrong type of removing");
+                list.Clear();
             }
 
             if (limit == "min")
-            {
-                while (nMax > 0)
-                {
-                    _list.RemoveAt(0);
-                    nMax--;
-                }
-            }
-            else if (limit == "max")
             {
                 while (nMin > 0)
                 {
                     _list.RemoveAt(0);
                     nMin--;
+                }
+            }
+            else if (limit == "max")
+            {
+                while (nMax > 0)
+                {
+                    _list.RemoveAt(0);
+                    nMax--;
                 }
             }
             else
