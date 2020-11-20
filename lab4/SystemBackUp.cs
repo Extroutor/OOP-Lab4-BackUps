@@ -31,22 +31,10 @@ namespace lab4
             }
         }
 
-        public void DeleteByCount(int id, int n)
+        public void Delete(int id, string type, object obj)
         {
-            _backUp[id].DeletePointByCount(n);
-            
-        }
-        
-        public void DeleteBySize(int id, int size)
-        {
-            _backUp[id].DeletePointBySize(size);
-            
-        }
-        
-        public void DeleteByDate(int id, DateTime date)
-        {
-            _backUp[id].DeletePointByDate(date);
-            
+            _backUp[id].Delete(type, obj);
+
         }
         
         public void DeleteByHybrid(int id, Dictionary<string, object> dict, string limit)

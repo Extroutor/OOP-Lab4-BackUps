@@ -109,33 +109,38 @@ namespace lab4
             // systemBackUp.GetList(id4);
             //
             Console.WriteLine("============================Case №4============================");
-
+            
             var file10 = new FileInfo("file10", 140);
             var file11 = new FileInfo("file11", 270);
             
             var listOfFiles5 = new List<FileInfo> {file10, file11};
             var dict = new Dictionary<string, object>();
-            dict.Add("byCount", 2);
+            dict.Add("byCount", 1);
             dict.Add("bySize", 300);
             
             
             var id5 = systemBackUp.AddBackUp("Separately");
             
             systemBackUp.CreatRestorePoint(id5, "Full", listOfFiles5);
+            Console.WriteLine("~Listing after adding:");
+            systemBackUp.GetList(id5);
+
+            
+            DateTime dateTime = new DateTime();
+            dateTime = DateTime.Now;
+            Console.WriteLine("wait 5 seconds...");
+            Thread.Sleep(5000);
             systemBackUp.CreatRestorePoint(id5, "Full", listOfFiles5);
-            systemBackUp.CreatRestorePoint(id5, "Full", listOfFiles5);
-            systemBackUp.CreatRestorePoint(id5, "Full", listOfFiles5);
+            
             Console.WriteLine("~Listing after adding:");
             systemBackUp.GetList(id5);
             
-            systemBackUp.DeleteByHybrid(id5, dict, "min");
-
+            systemBackUp.DeleteByHybrid(id5, dict, "max");
             Console.WriteLine("~Listing after removing:");
             systemBackUp.GetList(id5);
+            
 
-
-
-
+            
 
         }
     }

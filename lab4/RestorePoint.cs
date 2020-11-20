@@ -13,7 +13,7 @@ namespace lab4
         private int _difsize = 0;
         public string _typeOfPoint;
         private string _typeOfStorage;
-        
+
         public RestorePoint(string name, int size, string storageType, string typeOfPoint)
         {
             _name = name;

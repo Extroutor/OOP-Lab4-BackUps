@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.IO;
 
 namespace lab4
 {
@@ -63,7 +64,8 @@ namespace lab4
                             }
 
                             size = (int) (size * 0.95);
-                            _list.Add(new RestorePoint("backup " + DateTime.Now + ".rar", size, storageType, typeOfPoint));
+                            _list.Add(new RestorePoint("backup " + DateTime.Now + ".rar", size, storageType,
+                                typeOfPoint));
                             break;
                         }
 
@@ -74,7 +76,7 @@ namespace lab4
                             {
                                 size += listOfFiles[i].GetSize();
                             }
-                            
+
                             if (_list.Count == 0)
                                 throw new Exception("Error: it is the incremental point without a father point");
 
@@ -95,115 +97,211 @@ namespace lab4
             }
         }
 
-        public void DeletePointByCount(int n)
+        public List<RestorePoint> DeletePointByCount(int n)
         {
-            for (var i = 0; i < _list.Count; i++)
+            var list = new List<RestorePoint>();
+            var flagIncr = false;
+
+            for (var i = _list.Count - 1; i >= 0; i--)
             {
-                if (_list[i]._typeOfPoint == "Full" && 
-                    (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
-                    continue;
-                else if (_list.Count > n)
-                    _list.RemoveAt(i);
+                if (_list[i]._typeOfPoint == "Increment")
+                {
+                    if (list.Count + 1 <= n)
+                    {
+                        list.Add(_list[i]);
+                    }
+
+                    flagIncr = true;
+                }
+                else if (_list[i]._typeOfPoint == "Full")
+                {
+                    if (flagIncr == true && list.Count + 1 > n)
+                    {
+                        break;
+                    }
+                    else if (list.Count + 1 <= n)
+                    {
+                        list.Add(_list[i]);
+                    }
+
+                    flagIncr = false;
+                }
+                else
+                    throw new Exception("Error: wrong type of point");
             }
-            for (var i = 0; i < _list.Count; i++)
-            {
-                if (_list.Count > n)
-                    _list.RemoveAt(i);
-            }
+
+            return list;
         }
 
-        public void DeletePointBySize(int size)
+
+        public List<RestorePoint> DeletePointBySize(int size)
         {
-            for (var i = 0; i < _list.Count; i++)
+            var list = new List<RestorePoint>();
+            var flagIncr = false;
+
+            for (var i = _list.Count - 1; i >= 0; i--)
             {
-                if (_list[i]._typeOfPoint == "Full" &&
-                    (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
-                    continue;
-                else if (GetFullSize() > size)
-                    _list.RemoveAt(i);
+                if (_list[i]._typeOfPoint == "Increment")
+                {
+                    if (GetFullSize(list) + _list[i].GetSize() < size)
+                    {
+                        list.Add(_list[i]);
+                    }
+
+                    flagIncr = true;
+                }
+                else if (_list[i]._typeOfPoint == "Full")
+                {
+                    if (flagIncr == true)
+                    {
+                        list.Add(_list[i]);
+                    }
+                    else if ((GetFullSize(list) + _list[i].GetSize()) < size)
+                    {
+                        list.Add(_list[i]);
+                    }
+
+                    flagIncr = false;
+                }
+                else
+                    throw new Exception("Error: wrong type of point");
             }
 
-            for (var i = 0; i < _list.Count; i++)
-            {
-                if (GetFullSize() > size)
-                    _list.RemoveAt(i);
-            }
+            return list;
         }
 
 
-        public void DeletePointByDate(DateTime date)
+        public List<RestorePoint> DeletePointByDate(DateTime date)
         {
-            for (var i = 0; i < _list.Count; i++)
+            var list = new List<RestorePoint>();
+            var flagIncr = false;
+
+            for (var i = _list.Count - 1; i >= 0; i--)
             {
-                if (_list[i]._typeOfPoint == "Full" &&
-                    (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
-                    continue;
-                else if (_list[i].GetDate() < date)
-                    _list.RemoveAt(i);
+                if (_list[i]._typeOfPoint == "Increment")
+                {
+                    if (_list[i].GetDate() <= date)
+                    {
+                        list.Add(_list[i]);
+                    }
+
+                    flagIncr = true;
+                }
+                else if (_list[i]._typeOfPoint == "Full")
+                {
+                    if (flagIncr == true)
+                    {
+                        list.Add(_list[i]);
+                    }
+                    else if (_list[i].GetDate() <= date)
+
+                    {
+                        list.Add(_list[i]);
+                    }
+
+                    flagIncr = false;
+                }
+                else
+                    throw new Exception("Error: wrong type of point");
             }
 
-            for (var i = 0; i < _list.Count; i++)
-            {
-                if (_list[i].GetDate() < date)
-                    _list.RemoveAt(i);
-            }
+            return list;
         }
+
 
         public void DeletePointByHybrid(Dictionary<string, object> dict, string limit)
         {
-            for (var i = 0; i < _list.Count; i++)
+            var list = new List<RestorePoint>();
+            var nMax = int.MaxValue;
+            var nMin = -1;
+
+            foreach (var tmp in dict)
             {
-                var flag = 0;
-                foreach (var tmp in dict)
+                if (tmp.Key == "byCount")
                 {
-                    if (tmp.Key == "byCount")
-                    {
-                        if (_list[i]._typeOfPoint == "Full" && 
-                            (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
-                            continue;
-                        else if (_list.Count > (int) tmp.Value)
-                            flag++;
-                    } else if (tmp.Key == "bySize")
-                    {
-                        if (_list[i]._typeOfPoint == "Full" && 
-                            (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
-                            continue;
-                        else if (GetFullSize() > (int) tmp.Value)
-                            flag++;
-                        } else if (tmp.Key == "byDate")
-                    {
-                        if (_list[i]._typeOfPoint == "Full" && 
-                            (_list[i + 1]._typeOfPoint == "Increment" || _list[i + 1] == null))
-                            continue;
-                        else if (_list[i].GetDate() < (DateTime) tmp.Value)
-                            flag++;
-                    }
+                    list.AddRange(DeletePointByCount((int) tmp.Value).ToArray());
+                    if (_list.Count - list.Count < nMax)
+                        nMax = list.Count;
                     else
-                        throw new Exception("Error: wrong type of removing");
+                        nMin = list.Count;
                 }
-
-                if (limit == "min")
+                else if (tmp.Key == "bySize")
                 {
-                    if (flag >= 1)
-                        _list.RemoveAt(i);
-
-                } else if (limit == "max")
+                    list.AddRange(DeletePointBySize((int) tmp.Value).ToArray());
+                    if (_list.Count - list.Count < nMax)
+                        nMax = list.Count;
+                    else
+                        nMin = list.Count;
+                }
+                else if (tmp.Key == "byDate")
                 {
-                    if (flag == dict.Count)
-                        _list.RemoveAt(i);
+                    list.AddRange(DeletePointByDate((DateTime) tmp.Value).ToArray());
+                    if (_list.Count - list.Count < nMax)
+                        nMax = list.Count;
+                    else
+                        nMin = list.Count;
                 }
                 else
-                    throw new Exception("Error: wrong type of limit");
+                    throw new Exception("Error: wrong type of removing");
             }
+
+            if (limit == "min")
+            {
+                while (nMax > 0)
+                {
+                    _list.RemoveAt(0);
+                    nMax--;
+                }
+            }
+            else if (limit == "max")
+            {
+                while (nMin > 0)
+                {
+                    _list.RemoveAt(0);
+                    nMin--;
+                }
+            }
+            else
+                throw new Exception("Error: wrong type of limit");
+        }
+
+        public void Delete(string type, object n)
+        {
+            var list = new List<RestorePoint>();
+
+            switch (type)
+            {
+                case "byCount":
+                {
+                    list.AddRange(DeletePointByCount((int) n).ToArray());
+                    break;
+                }
+                case "bySize":
+                {
+                    list.AddRange(DeletePointBySize((int) n).ToArray());
+                    break;
+                }
+                case "byDate":
+                {
+                    list.AddRange(DeletePointByDate((DateTime) n).ToArray());
+                    break;
+                }
+            }
+
+            _list.Clear();
+            _list.AddRange(list.ToArray());
+            _list.Reverse();
         }
 
 
-        private int GetFullSize()
+        private int GetFullSize(List<RestorePoint> list)
         {
             var fullSize = 0;
-            for (var i = 0; i < _list.Count; i++)
+            for (var i = 0;
+                i < list.Count;
+                i++)
             {
-                fullSize += _list[i].GetSize();
+                fullSize += list[i].GetSize();
             }
 
             return fullSize;
@@ -211,8 +309,10 @@ namespace lab4
 
         public void GetList()
         {
-            Console.WriteLine("Size of BackUp - " + GetFullSize());
-            for (var i = 0; i < _list.Count; i++)
+            Console.WriteLine("Size of BackUp - " + GetFullSize(_list));
+            for (var i = 0;
+                i < _list.Count;
+                i++)
             {
                 Console.WriteLine("Point №" + (i + 1));
                 _list[i].GetLine();
