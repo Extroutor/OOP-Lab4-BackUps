@@ -44,10 +44,39 @@ namespace lab4
             _listOfPoints.AddRange(newList.ToArray());
         }
 
-        public void HybridDelete(List<IRemove> list, List<FileInfo> listOfFiles, Limits limit)
+        public void HybridDelete(List<IRemove> listOfTypes, List<FileInfo> listOfFiles, Limits limit)
         {
-            
-            
+            var list = new List<IPoint>();
+            var nMax = int.MaxValue;
+            var nMin = 0;
+
+            foreach (var tmp in listOfTypes)
+            {
+                list.AddRange(tmp.Delete(_listOfPoints).ToArray());
+
+                if (_listOfPoints.Count - list.Count <= nMax)
+                    nMax = _listOfPoints.Count - list.Count;
+                if (_listOfPoints.Count - list.Count >= nMin)
+                    nMin = _listOfPoints.Count - list.Count;
+                list.Clear();
+            }
+
+            if (limit == Limits.Min)
+            {
+                while (nMin > 0)
+                {
+                    _listOfPoints.RemoveAt(0);
+                    nMin--;
+                }
+            }
+            else if (limit == Limits.Max)
+            {
+                while (nMax > 0)
+                {
+                    _listOfPoints.RemoveAt(0);
+                    nMax--;
+                }
+            }
         }
 
         private int GetFullSize(List<IPoint> list)
