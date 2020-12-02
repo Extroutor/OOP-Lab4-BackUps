@@ -33,7 +33,6 @@ namespace lab4
             backUp1.HybridDelete(list, listOfFiles, Limits.Min);
             
             backUp1.GetList();
-
         }
     }
 }

@@ -22,7 +22,6 @@ namespace lab4
         public void AddIncPoint(List<FileInfo> files)
         {
             var size = 0;
-            var count = files.Count;
             for (var i = 0; i < files.Count; i++)
             {
                 size += files[i].GetSize();
