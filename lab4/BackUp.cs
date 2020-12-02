@@ -27,6 +27,11 @@ namespace lab4
             _store.AddIncPoint(files);
         }
 
+        public void Delete(IRemove typeOfRemoving)
+        {
+            _store.Delete(typeOfRemoving);
+        }
+     
         public void GetList()
         {
             _store.GetListOfPoints();

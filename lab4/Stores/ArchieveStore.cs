@@ -6,6 +6,7 @@ namespace lab4
     public class ArchieveStore : IStore
     {
         private List<IPoint> _listOfPoints = new List<IPoint>();
+        private IStore _storeImplementation;
 
         public void AddFullPoint(List<FileInfo> files)
         {
@@ -34,7 +35,15 @@ namespace lab4
             var diffSize = _listOfPoints[_listOfPoints.Count - 1].GetSize() - size;
             _listOfPoints.Add(new IncrementPoint(size, diffSize));
         }
-        
+
+        public void Delete(IRemove typeOfRemove)
+        {
+            var newList = new List<IPoint>();
+            newList = typeOfRemove.Delete(_listOfPoints);
+            _listOfPoints.Clear();
+            _listOfPoints.AddRange(newList.ToArray());
+        }
+
         private int GetFullSize(List<IPoint> list)
         {
             var fullSize = 0; 

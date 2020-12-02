@@ -11,8 +11,6 @@ namespace lab4
         private DateTime _date;
         private string _name;
         private int _fullSize;
-        private IPoint _pointImplementation;
-
         public FullPoint(List<FileCopy> files)
         {
 
@@ -52,6 +50,9 @@ namespace lab4
 
             return _fullSize;
         }
+
+        public bool isFull() { return true; }
+        
 
         public void GetLine()
         {

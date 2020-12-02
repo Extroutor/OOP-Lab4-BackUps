@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace lab4
@@ -8,8 +9,7 @@ namespace lab4
         public void AddFullPoint(List<FileInfo> files);
         public void AddIncPoint(List<FileInfo> files);
 
+        public void Delete(IRemove typeOfRemove);
         public void GetListOfPoints();
-
-
     }
 }

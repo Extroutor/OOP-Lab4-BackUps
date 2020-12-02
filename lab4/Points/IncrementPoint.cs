@@ -9,7 +9,7 @@ namespace lab4
         private int _size;
         private int _diffSize;
         private DateTime _date;
-        
+
         public IncrementPoint(int size, int diffSize)
         {
             _size = size;
@@ -21,6 +21,8 @@ namespace lab4
         {
             return _size;
         }
+        
+        public bool isFull() { return false; }
 
         public void GetLine()
         {

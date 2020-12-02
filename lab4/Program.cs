@@ -8,7 +8,7 @@ namespace lab4
     {
         public static void Main()
         {
-            var backUp1 = new BackUp(new ArchieveStore());
+            var backUp1 = new BackUp(new SeparatelyStore());
             
             var file1 = new FileInfo("file1", 300);
             var file2 = new FileInfo("file2", 200);
@@ -17,11 +17,14 @@ namespace lab4
             
             backUp1.AddFullPoint(listOfFiles);
             backUp1.GetList();
-
-            
-            backUp1.AddIncrementPoint(listOfFiles);
-            
+            backUp1.AddFullPoint(listOfFiles);
             backUp1.GetList();
+
+            backUp1.Delete(new RemoveBySize(600));
+           
+            //backUp1.Delete(new RemoveByCount(1));
+            backUp1.GetList();
+
         }
     }
 }
