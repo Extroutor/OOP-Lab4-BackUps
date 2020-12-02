@@ -51,6 +51,11 @@ namespace lab4
             return _fullSize;
         }
 
+        public DateTime GetDate()
+        {
+            return _date;
+        }
+
         public bool isFull() { return true; }
         
 

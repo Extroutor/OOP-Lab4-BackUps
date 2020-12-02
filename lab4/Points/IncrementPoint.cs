@@ -22,6 +22,11 @@ namespace lab4
             return _size;
         }
         
+        public DateTime GetDate()
+        {
+            return _date;
+        }
+        
         public bool isFull() { return false; }
 
         public void GetLine()

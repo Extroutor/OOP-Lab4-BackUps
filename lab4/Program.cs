@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading;
 
 namespace lab4
 {
+    public enum Limits
+    {
+        Min,
+        Max
+    }
     public static class Program
     {
         public static void Main()
@@ -20,9 +26,12 @@ namespace lab4
             backUp1.AddFullPoint(listOfFiles);
             backUp1.GetList();
 
-            backUp1.Delete(new RemoveBySize(600));
+            var list = new List<IRemove>();
+            list.Add(new RemoveByCount(1));
+          //  list.Add(new RemoveBySize(600));
            
-            //backUp1.Delete(new RemoveByCount(1));
+            backUp1.HybridDelete(list, listOfFiles, Limits.Min);
+            
             backUp1.GetList();
 
         }

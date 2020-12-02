@@ -44,6 +44,12 @@ namespace lab4
             _listOfPoints.AddRange(newList.ToArray());
         }
 
+        public void HybridDelete(List<IRemove> list, List<FileInfo> listOfFiles, Limits limit)
+        {
+            
+            
+        }
+
         private int GetFullSize(List<IPoint> list)
         {
             var fullSize = 0; 

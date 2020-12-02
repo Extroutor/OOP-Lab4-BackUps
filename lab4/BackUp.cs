@@ -31,7 +31,11 @@ namespace lab4
         {
             _store.Delete(typeOfRemoving);
         }
-     
+
+        public void HybridDelete(List<IRemove> list, List<FileInfo> listOfPoints, Limits limit)
+        {
+            _store.HybridDelete(list, listOfPoints, limit);
+        }
         public void GetList()
         {
             _store.GetListOfPoints();
