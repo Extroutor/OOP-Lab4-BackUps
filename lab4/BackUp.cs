@@ -9,10 +9,10 @@ namespace lab4
 {
     public class BackUp
     {
-        private IStore _store;
+        private Store _store;
         private List<IPoint> _listOfPoints = new List<IPoint>();
 
-        public BackUp(IStore store)
+        public BackUp(Store store)
         {
             _store = store;
         }

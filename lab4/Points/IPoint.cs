@@ -6,8 +6,8 @@ namespace lab4
     public interface IPoint
     {
         public int GetSize();
-        public DateTime GetDate();
-        public bool isFull();
         public void GetLine();
+        public DateTime GetDate();
+        public bool IsFull();
     }
 }

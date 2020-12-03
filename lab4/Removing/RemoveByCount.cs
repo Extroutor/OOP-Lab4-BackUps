@@ -18,7 +18,7 @@ namespace lab4
 
             for (var i = listOfPoints.Count - 1; i >= 0; i--)
             {
-                if (listOfPoints[i].isFull() == false)
+                if (listOfPoints[i].IsFull() == false)
                 {
                     if (list.Count + 1 <= _countLimit)
                     {
@@ -26,7 +26,7 @@ namespace lab4
                     }
                     flagIncr = true;
                 } 
-                else if (listOfPoints[i].isFull() == true)
+                else if (listOfPoints[i].IsFull() == true)
                 {
                     if (flagIncr == true && list.Count + 1 > _countLimit)
                     {

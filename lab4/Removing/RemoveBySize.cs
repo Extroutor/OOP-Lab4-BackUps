@@ -26,7 +26,7 @@ namespace lab4
                     size = list[tmp].GetSize();
                 }
                 
-                if (listOfPoints[i].isFull() == false)
+                if (listOfPoints[i].IsFull() == false)
                 {
                     if (listOfPoints[i].GetSize() + size < _sizeLimit)
                     {
@@ -34,7 +34,7 @@ namespace lab4
                     }
                     flagIncr = true;
                 } 
-                else if (listOfPoints[i].isFull() == true)
+                else if (listOfPoints[i].IsFull() == true)
                 {
                     if (flagIncr == true)
                     {

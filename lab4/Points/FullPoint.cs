@@ -7,7 +7,7 @@ namespace lab4
 {
     public class FullPoint : IPoint
     {
-        private List<Point> _files = new List<Point>();
+        private List<FileInfo> _files = new List<FileInfo>();
         private DateTime _date;
         private string _name;
         private int _fullSize;
@@ -16,7 +16,7 @@ namespace lab4
 
             for (var i = 0; i < files.Count; i++)
             {
-                _files.Add(new Point(files[i].GetName(), files[i].GetSize()));
+                _files.Add(new FileInfo(files[i].GetName(), files[i].GetSize()));
             }
 
             _date = DateTime.Now;
@@ -56,9 +56,8 @@ namespace lab4
             return _date;
         }
 
-        public bool isFull() { return true; }
+        public bool IsFull() { return true; }
         
-
         public void GetLine()
         {
             Console.WriteLine("Date of creation - " + _date + ":");

@@ -27,7 +27,7 @@ namespace lab4
             return _date;
         }
         
-        public bool isFull() { return false; }
+        public bool IsFull() { return false; }
 
         public void GetLine()
         {
