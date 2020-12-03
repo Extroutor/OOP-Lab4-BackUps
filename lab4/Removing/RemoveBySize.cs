@@ -21,7 +21,7 @@ namespace lab4
             for (var i = listOfPoints.Count - 1; i >= 0; i--)
             {
                 var size = 0;
-                for (var tmp = 0; i < list.Count; i++)
+                for (var tmp = 0; tmp < list.Count; tmp++)
                 {
                     size = list[tmp].GetSize();
                 }

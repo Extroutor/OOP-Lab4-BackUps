@@ -25,14 +25,16 @@ namespace lab4
             backUp1.GetList();
             backUp1.AddFullPoint(listOfFiles);
             backUp1.GetList();
+            backUp1.Delete(new RemoveBySize(600));
+            backUp1.GetList();
           //
           //   var list = new List<IRemove>();
           //   list.Add(new RemoveByCount(1));
-          // //  list.Add(new RemoveBySize(600));
+          // list.Add(new RemoveBySize(600));
           //  
           //   backUp1.HybridDelete(list, listOfFiles, Limits.Min);
           //   
-          //   backUp1.GetList();
+// backUp1.GetList();
         }
     }
 }
