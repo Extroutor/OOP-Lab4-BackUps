@@ -35,7 +35,7 @@ namespace lab4
             _listOfPoints.AddRange(newList.ToArray());
         }
 
-        public void HybridDelete(List<IRemove> listOfTypes, List<FileInfo> listOfFiles, Limits limit)
+        public void HybridDelete(List<IRemove> listOfTypes, Limits limit)
         {
             var list = new List<IPoint>();
             var nMax = int.MaxValue;
