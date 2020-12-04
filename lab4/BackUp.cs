@@ -32,9 +32,9 @@ namespace lab4
             _store.Delete(typeOfRemoving);
         }
 
-        public void HybridDelete(List<IRemove> list, List<FileInfo> listOfPoints, Limits limit)
+        public void HybridDelete(List<IRemove> list, Limits limit)
         {
-            _store.HybridDelete(list, listOfPoints, limit);
+            _store.HybridDelete(list, limit);
         }
         public void GetList()
         {

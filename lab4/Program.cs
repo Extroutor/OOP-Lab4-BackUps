@@ -23,18 +23,23 @@ namespace lab4
             
             backUp1.AddFullPoint(listOfFiles);
             backUp1.GetList();
+            
+            Thread.Sleep(5000);
+            var date = DateTime.Now;
+            Console.WriteLine(date);
+            Console.WriteLine("");
+            
             backUp1.AddFullPoint(listOfFiles);
             backUp1.GetList();
-            backUp1.Delete(new RemoveBySize(600));
+            
+            
+            Thread.Sleep(5000);
+            backUp1.AddFullPoint(listOfFiles);
             backUp1.GetList();
-          //
-          //   var list = new List<IRemove>();
-          //   list.Add(new RemoveByCount(1));
-          // list.Add(new RemoveBySize(600));
-          //  
-          //   backUp1.HybridDelete(list, listOfFiles, Limits.Min);
-          //   
-// backUp1.GetList();
+
+            backUp1.Delete(new RemoveByDate(date));
+            backUp1.GetList();
+
         }
     }
 }
